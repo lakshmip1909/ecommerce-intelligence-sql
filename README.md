@@ -54,3 +54,33 @@ The dataset is historical and covers a limited observation period. Results descr
 ## Author
 
 Lakshmi Priya Subramonian
+## Data Preparation
+
+The project uses the publicly available Olist Brazilian E-Commerce Dataset.
+
+Download the dataset from:
+https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
+
+Place the original CSV files inside the `data/` directory.
+
+### Preparing the Reviews Dataset
+
+The original `olist_order_reviews_dataset.csv` contains multiline review comments that can cause issues during MySQL CSV imports.
+
+Run the following command before importing the reviews table:
+
+```bash
+python3 scripts/prepare_reviews.py
+```
+
+This script:
+- Reads the original reviews dataset.
+- Replaces carriage returns and newline characters in review comments with spaces.
+- Preserves all other column values.
+- Generates `data/olist_order_reviews_clean.csv`.
+
+Validation confirmed that all 99,224 review records were preserved and the regenerated dataset matched the previously cleaned version.
+
+The `data/` directory is excluded from GitHub to avoid redistributing the raw dataset.
+
+All business analysis, data quality checks and query optimisation are performed using MySQL.
